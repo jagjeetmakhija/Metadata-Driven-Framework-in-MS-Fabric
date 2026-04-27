@@ -1,6 +1,7 @@
-# Jagjeet Pipeline Operations Tracker
+# MS Fabric pipeline execution monitring and logging
+
 ### A Self-Installing Pipeline Monitoring Framework for Microsoft Fabric
-**Version 3.4.3 · Built by Jagjeet · Microsoft Fabric + Power BI**
+** Built by Jagjeet · Microsoft Fabric + Power BI**
 ---
 
 ## What Is This?
@@ -48,9 +49,7 @@ YOUR FABRIC WORKSPACE
 ---
 
 ## Prerequisites
-
 Before running anything, make sure you have:
-
 - [ ] A **Microsoft Fabric workspace** with Spark compute enabled
 - [ ] A **Fabric notebook** open and attached to a lakehouse (or let the framework create one)
 - [ ] The file `jagjeet_logging_utils.py` uploaded to your notebook's **Resources** folder
@@ -61,7 +60,6 @@ Before running anything, make sure you have:
 ---
 
 # EXECUTION GUIDE
-
 ---
 
 ## PHASE 1 — First-Time Setup
@@ -75,7 +73,6 @@ This is the **only file required for production**. The other two files are optio
 
 ### Step 2 · Initialise the tracker
 In a new notebook cell, run:
-
 ```python
 # ─────────────────────────────────────────────────────
 # FILE: jagjeet_logging_utils.py  |  Class: JagjeetPipelineTracker
@@ -98,6 +95,7 @@ tracker = JagjeetPipelineTracker("MyProject")
 | 7 | Authenticates using Fabric native token | `_authenticate_for_tom()` → line 176 |
 | 8 | Builds the Direct Lake Power BI semantic model | `_build_power_bi_model()` → line 279 |
 | 9 | Adds 2 relationships and 8 DAX measures | `_add_model_relationships()` → line 305 |
+
 **Expected output:**
 ```
 ============================================================
@@ -106,10 +104,8 @@ JAGJEET PIPELINE OPERATIONS TRACKER v3.4.3
   • Project:        MyProject
   • Lakehouse:      LH_MyProject_Jagjeet_PipelineOps
   • Semantic Model: SM_MyProject_Jagjeet_PipelineOps
-
-  Workspace: YourWorkspaceName
-
-  Tables:
+Workspace: YourWorkspaceName
+Tables:
     pipeline_activity_log: created
     date_dimension: created (4 years)
     time_dimension: created (1,440 slots)
@@ -126,7 +122,6 @@ JAGJEET PIPELINE OPERATIONS TRACKER v3.4.3
 Ready. Use: tracker.track_pipeline_run(...)
 ============================================================
 ```
-
 > **Second run onwards:** If the lakehouse and tables already exist, the framework detects them and preserves all data. Setup takes only a few seconds on subsequent runs.
 
 ---
@@ -191,7 +186,7 @@ tracker = quick_test("MyProject")
 [OK] MERGE    | sales     | Δ+500 rows   | 12.4s
 [OK] DELETE   | inventory | Δ-50 rows    | 2.8s
 
-✅ Quick test complete
+Quick test complete
 ```
 ---
 
@@ -223,7 +218,6 @@ tracker = setup_complete_test_environment("MyProject")
 ---
 
 ## PHASE 3 — Log Real Pipeline Runs
-
 ### Step 7 · Log a successful run
 ```python
 # ─────────────────────────────────────────────────────
@@ -275,7 +269,6 @@ tracker.track_pipeline_run(
 ```
   [FAILED] VALIDATE | orders | Δ-1,500 rows | 25.4s | 2025-09-15
 ```
-
 > When `error_details` is populated, the entry is marked **FAILED**. The Power BI measures **Failed Runs** and **Success Rate** pick this up automatically.
 ---
 
@@ -347,7 +340,6 @@ for i in range(7):
 # ─────────────────────────────────────────────────────
 
 from datetime import datetime, timedelta
-
 pipeline_start = datetime.now()
 
 # Stage 1 — Extract
@@ -374,7 +366,6 @@ tracker.track_pipeline_run(
     custom_timestamp=pipeline_start + timedelta(minutes=75)
 )
 ```
-
 ---
 
 ### Step 12 · Track a batch with mixed outcomes
@@ -416,13 +407,10 @@ tracker.track_pipeline_run(
     custom_timestamp=batch_start + timedelta(hours=2)
 )
 ```
-
 ---
-
 ---
 
 ## PHASE 4 — Monitor and Maintain
-
 ### Step 13 · View recent runs
 ```python
 # ─────────────────────────────────────────────────────
@@ -476,7 +464,6 @@ df = tracker.fetch_activity_logs(limit=200)
 failures = df.filter(df.error_details.isNotNull())
 failures.show()
 ```
-
 ---
 
 ### Step 16 · Refresh the Power BI model
@@ -715,7 +702,6 @@ MAINTAIN
 | Connect to external monitoring tools | Self-contained, no third-party integrations |
 
 ---
-
 ## Troubleshooting
 | Problem | Likely Cause | Fix |
 |---|---|---|
@@ -726,7 +712,6 @@ MAINTAIN
 | `Refresh failed` | Fabric dataset refresh quota | Retry after a few minutes or refresh manually in Power BI |
 
 ---
-
 ## Built By
 **Jagjeet** · Jagjeet Pipeline Operations Tracker v3.4.3
 `Microsoft Fabric` · `PySpark` · `Delta Lake` · `Power BI Direct Lake` · `TOM (Tabular Object Model)`
