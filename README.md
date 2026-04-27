@@ -1,7 +1,7 @@
 # MS Fabric pipeline execution monitring and logging
 
 ### A Self-Installing Pipeline Monitoring Framework for Microsoft Fabric
-** Built by Jagjeet · Microsoft Fabric + Power BI**
+** Built by Jagjeet Makhija· Microsoft Fabric + Power BI**
 ---
 
 ## What Is This?
@@ -713,5 +713,5 @@ MAINTAIN
 
 ---
 ## Built By
-**Jagjeet** · Jagjeet Pipeline Operations Tracker v3.4.3
+**Jagjeet Makhija** 
 `Microsoft Fabric` · `PySpark` · `Delta Lake` · `Power BI Direct Lake` · `TOM (Tabular Object Model)`
