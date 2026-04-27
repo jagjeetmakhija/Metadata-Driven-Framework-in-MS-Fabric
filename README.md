@@ -58,7 +58,6 @@ Before running anything, make sure you have:
 > **Note:** `semantic-link-labs` (`jags_labs`) is installed automatically if missing — you do not need to pip install anything manually.
 
 ---
-
 ---
 
 # EXECUTION GUIDE
@@ -66,7 +65,6 @@ Before running anything, make sure you have:
 ---
 
 ## PHASE 1 — First-Time Setup
-
 ### Step 1 · Upload the core file
 Upload `jagjeet_logging_utils.py` to your Fabric notebook's **Resources** folder.
 ```
